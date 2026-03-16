@@ -1,0 +1,500 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03A69D43C8160BD1241701A2 /* BottleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0EAB9B92E9B17E0B6C62E8 /* BottleManager.swift */; };
+		200082D955B8C4C48B4C6D22 /* ProgressOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE87F93647895A9B79B9385 /* ProgressOverlay.swift */; };
+		33D53AED92776B64F2ACA8DD /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1457F46DAE693FC227B0CF0D /* LaunchViewModel.swift */; };
+		351C290966CA4A5F60467F9E /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55484DEAE104C2050688CF4 /* SetupViewModel.swift */; };
+		382EFE1F5BFC547516BF1507 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29931FCD6B99FDDCD1D4F6DC /* SetupView.swift */; };
+		43E3AC49C024502BD5AC2F9C /* PathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B7395355F63F99E2E152D7 /* PathProvider.swift */; };
+		4CD1D687293DB64A9684185F /* SteamBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36217793D8BA20E0A847ECFA /* SteamBuild.swift */; };
+		615ECD100EAEE2357C025987 /* SteamInstallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */; };
+		62A9944C61C60226EA88AD79 /* BottleManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7D3509F94D4D98EEB0A97 /* BottleManagementView.swift */; };
+		78DAA45B40A37330A0178998 /* RuntimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */; };
+		78E3FF496B0A7CA032726130 /* AddGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04295CE9A3D887675AED55CA /* AddGameView.swift */; };
+		81C15E1CAEE3FB60C6D41593 /* ShellRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */; };
+		81CE45F25C8DD786780958EA /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E50C0E6F61627048674822 /* GameManager.swift */; };
+		83E47EC0CC973CC9C2C57D34 /* SmokeLauncherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2143712EA34E5C9DD0F6D8 /* SmokeLauncherApp.swift */; };
+		858AC6346083134777C45E44 /* BottleSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9E0946BC0C335F4084515 /* BottleSetupView.swift */; };
+		90A32BA080F1A849F4ACB7F4 /* RuntimeDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717437EF6E781ABA0DC8BA07 /* RuntimeDownloadView.swift */; };
+		A2D745FAEE30F7767CFC544C /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2235A25FFD342CB3BA57AB8B /* StatusBadge.swift */; };
+		A392F013527F234E491F26CA /* Bottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B1BF46F3369264D7B6BA9 /* Bottle.swift */; };
+		A4EFDC32F416BA66D7A96F93 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036AFDCF2D4E17832FEF982 /* LogView.swift */; };
+		AE031EB0367B914325EAA679 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07191A4D30CA25E091A2BBC3 /* ContentView.swift */; };
+		AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043005F930A0D4DE87642B7 /* GameDetailView.swift */; };
+		AEC97CDA7F5CBFB8A6A3D879 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C078F97DDEAB7B4AF12A8676 /* AppError.swift */; };
+		AF087ADDC03192C55C5C1991 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67EADA3E26DEC0A4311AD43 /* Game.swift */; };
+		B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A28FC4EE091F02B47438A /* DetectedGamesView.swift */; };
+		CD6C66C97B6735E85BE8C12D /* SteamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A457939C86F30B918B89E5 /* SteamManager.swift */; };
+		DE532A77FD415C2F79D3CFAD /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321C6BC912AB8C71A84389F4 /* LibraryView.swift */; };
+		E5E7810E010B645E46742FC5 /* GameRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E3CA048829A1EE03CB787 /* GameRowView.swift */; };
+		EA298FAA931B632375EEFFCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91889D43B804B9902E96CCE3 /* Assets.xcassets */; };
+		EF323A089DB4A7E2844B2A9D /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E1F69554339FFBFEBFC51E /* LibraryViewModel.swift */; };
+		F1A2B3C4D5E6F7A8B9C0D1E2 /* GlassModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* GlassModifier.swift */; };
+		F2A3B4C5D6E7F8A9B0C1D2E3 /* SteamArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F7A8B9C0D1E2F3 /* SteamArtworkView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0036AFDCF2D4E17832FEF982 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		04295CE9A3D887675AED55CA /* AddGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGameView.swift; sourceTree = "<group>"; };
+		04E7D3509F94D4D98EEB0A97 /* BottleManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleManagementView.swift; sourceTree = "<group>"; };
+		07191A4D30CA25E091A2BBC3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1457F46DAE693FC227B0CF0D /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		2235A25FFD342CB3BA57AB8B /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		29931FCD6B99FDDCD1D4F6DC /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		29B9E0946BC0C335F4084515 /* BottleSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleSetupView.swift; sourceTree = "<group>"; };
+		2E4B1BF46F3369264D7B6BA9 /* Bottle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bottle.swift; sourceTree = "<group>"; };
+		321C6BC912AB8C71A84389F4 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		330E3CA048829A1EE03CB787 /* GameRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRowView.swift; sourceTree = "<group>"; };
+		33A457939C86F30B918B89E5 /* SteamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamManager.swift; sourceTree = "<group>"; };
+		36217793D8BA20E0A847ECFA /* SteamBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamBuild.swift; sourceTree = "<group>"; };
+		3BE87F93647895A9B79B9385 /* ProgressOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressOverlay.swift; sourceTree = "<group>"; };
+		5043005F930A0D4DE87642B7 /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
+		51E50C0E6F61627048674822 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		717437EF6E781ABA0DC8BA07 /* RuntimeDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeDownloadView.swift; sourceTree = "<group>"; };
+		78E1F69554339FFBFEBFC51E /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+		7B2143712EA34E5C9DD0F6D8 /* SmokeLauncherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeLauncherApp.swift; sourceTree = "<group>"; };
+		889A28FC4EE091F02B47438A /* DetectedGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedGamesView.swift; sourceTree = "<group>"; };
+		91889D43B804B9902E96CCE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeManager.swift; sourceTree = "<group>"; };
+		A67EADA3E26DEC0A4311AD43 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smoke Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C078F97DDEAB7B4AF12A8676 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		C55484DEAE104C2050688CF4 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
+		D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellRunner.swift; sourceTree = "<group>"; };
+		DBCC655D2ED2B5BFC82EC6E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E4B7395355F63F99E2E152D7 /* PathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathProvider.swift; sourceTree = "<group>"; };
+		F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamInstallView.swift; sourceTree = "<group>"; };
+		FC0EAB9B92E9B17E0B6C62E8 /* BottleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleManager.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* GlassModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassModifier.swift; sourceTree = "<group>"; };
+		A2B3C4D5E6F7A8B9C0D1E2F3 /* SteamArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamArtworkView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D4880BF4E813363E7D94BDE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				04E7D3509F94D4D98EEB0A97 /* BottleManagementView.swift */,
+				07191A4D30CA25E091A2BBC3 /* ContentView.swift */,
+				2BC46C40E87A5B1164F911DC /* Detail */,
+				4E003F7A5F185301BEE83E3F /* Library */,
+				B6A7B4D8514DACC9A974E173 /* Setup */,
+				90D5A2B146B7109B8C8F6A11 /* Shared */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2BC46C40E87A5B1164F911DC /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				5043005F930A0D4DE87642B7 /* GameDetailView.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		43E055D2AD1029970AFF338A /* Smoke Launcher */ = {
+			isa = PBXGroup;
+			children = (
+				DBCC655D2ED2B5BFC82EC6E6 /* Info.plist */,
+				7B2143712EA34E5C9DD0F6D8 /* SmokeLauncherApp.swift */,
+				913DF4AD0AF3D8EA80E2102D /* Managers */,
+				C5EF37503CA8598E6ACD2978 /* Models */,
+				E30CE45F76D550C04C46A420 /* Resources */,
+				C1A6DC6A5B209BF33F424C14 /* ViewModels */,
+				0D4880BF4E813363E7D94BDE /* Views */,
+			);
+			path = "Smoke Launcher";
+			sourceTree = "<group>";
+		};
+		4E003F7A5F185301BEE83E3F /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				04295CE9A3D887675AED55CA /* AddGameView.swift */,
+				889A28FC4EE091F02B47438A /* DetectedGamesView.swift */,
+				330E3CA048829A1EE03CB787 /* GameRowView.swift */,
+				321C6BC912AB8C71A84389F4 /* LibraryView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		65240E299CC3BCAB1E5E5169 = {
+			isa = PBXGroup;
+			children = (
+				43E055D2AD1029970AFF338A /* Smoke Launcher */,
+				67FC6FABF40D03985160E58F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		67FC6FABF40D03985160E58F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		90D5A2B146B7109B8C8F6A11 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* GlassModifier.swift */,
+				0036AFDCF2D4E17832FEF982 /* LogView.swift */,
+				3BE87F93647895A9B79B9385 /* ProgressOverlay.swift */,
+				2235A25FFD342CB3BA57AB8B /* StatusBadge.swift */,
+				A2B3C4D5E6F7A8B9C0D1E2F3 /* SteamArtworkView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		913DF4AD0AF3D8EA80E2102D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				FC0EAB9B92E9B17E0B6C62E8 /* BottleManager.swift */,
+				51E50C0E6F61627048674822 /* GameManager.swift */,
+				E4B7395355F63F99E2E152D7 /* PathProvider.swift */,
+				A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */,
+				D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */,
+				33A457939C86F30B918B89E5 /* SteamManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		B6A7B4D8514DACC9A974E173 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				29B9E0946BC0C335F4084515 /* BottleSetupView.swift */,
+				717437EF6E781ABA0DC8BA07 /* RuntimeDownloadView.swift */,
+				29931FCD6B99FDDCD1D4F6DC /* SetupView.swift */,
+				F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		C1A6DC6A5B209BF33F424C14 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1457F46DAE693FC227B0CF0D /* LaunchViewModel.swift */,
+				78E1F69554339FFBFEBFC51E /* LibraryViewModel.swift */,
+				C55484DEAE104C2050688CF4 /* SetupViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C5EF37503CA8598E6ACD2978 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C078F97DDEAB7B4AF12A8676 /* AppError.swift */,
+				2E4B1BF46F3369264D7B6BA9 /* Bottle.swift */,
+				A67EADA3E26DEC0A4311AD43 /* Game.swift */,
+				36217793D8BA20E0A847ECFA /* SteamBuild.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E30CE45F76D550C04C46A420 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				91889D43B804B9902E96CCE3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		61155F2F3DB99835A34E44F9 /* Smoke Launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 962A72669CCCADCF881408D7 /* Build configuration list for PBXNativeTarget "Smoke Launcher" */;
+			buildPhases = (
+				D792DCEF74B5DF18268C454B /* Sources */,
+				ECF8700EDD734BAF322F1131 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Smoke Launcher";
+			packageProductDependencies = (
+			);
+			productName = "Smoke Launcher";
+			productReference = A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		587F3F3BCA58FA5AD991F189 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					61155F2F3DB99835A34E44F9 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E85D6935F1629D8D28426A49 /* Build configuration list for PBXProject "Smoke Launcher" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 65240E299CC3BCAB1E5E5169;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 67FC6FABF40D03985160E58F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				61155F2F3DB99835A34E44F9 /* Smoke Launcher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ECF8700EDD734BAF322F1131 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA298FAA931B632375EEFFCC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D792DCEF74B5DF18268C454B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78E3FF496B0A7CA032726130 /* AddGameView.swift in Sources */,
+				AEC97CDA7F5CBFB8A6A3D879 /* AppError.swift in Sources */,
+				A392F013527F234E491F26CA /* Bottle.swift in Sources */,
+				62A9944C61C60226EA88AD79 /* BottleManagementView.swift in Sources */,
+				03A69D43C8160BD1241701A2 /* BottleManager.swift in Sources */,
+				858AC6346083134777C45E44 /* BottleSetupView.swift in Sources */,
+				AE031EB0367B914325EAA679 /* ContentView.swift in Sources */,
+				B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */,
+				AF087ADDC03192C55C5C1991 /* Game.swift in Sources */,
+				AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */,
+				81CE45F25C8DD786780958EA /* GameManager.swift in Sources */,
+				E5E7810E010B645E46742FC5 /* GameRowView.swift in Sources */,
+				33D53AED92776B64F2ACA8DD /* LaunchViewModel.swift in Sources */,
+				DE532A77FD415C2F79D3CFAD /* LibraryView.swift in Sources */,
+				EF323A089DB4A7E2844B2A9D /* LibraryViewModel.swift in Sources */,
+				A4EFDC32F416BA66D7A96F93 /* LogView.swift in Sources */,
+				43E3AC49C024502BD5AC2F9C /* PathProvider.swift in Sources */,
+				200082D955B8C4C48B4C6D22 /* ProgressOverlay.swift in Sources */,
+				90A32BA080F1A849F4ACB7F4 /* RuntimeDownloadView.swift in Sources */,
+				78DAA45B40A37330A0178998 /* RuntimeManager.swift in Sources */,
+				382EFE1F5BFC547516BF1507 /* SetupView.swift in Sources */,
+				351C290966CA4A5F60467F9E /* SetupViewModel.swift in Sources */,
+				81C15E1CAEE3FB60C6D41593 /* ShellRunner.swift in Sources */,
+				83E47EC0CC973CC9C2C57D34 /* SmokeLauncherApp.swift in Sources */,
+				A2D745FAEE30F7767CFC544C /* StatusBadge.swift in Sources */,
+				4CD1D687293DB64A9684185F /* SteamBuild.swift in Sources */,
+				615ECD100EAEE2357C025987 /* SteamInstallView.swift in Sources */,
+				CD6C66C97B6735E85BE8C12D /* SteamManager.swift in Sources */,
+				F1A2B3C4D5E6F7A8B9C0D1E2 /* GlassModifier.swift in Sources */,
+				F2A3B4C5D6E7F8A9B0C1D2E3 /* SteamArtworkView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3A8901A4E80405E197AAC472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Smoke Launcher/Smoke Launcher.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Smoke Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smokelauncher.app;
+				PRODUCT_NAME = "Smoke Launcher";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		55354157DC3E4C4816598DA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		A627103FD30A3B26A867F283 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Smoke Launcher/Smoke Launcher.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Smoke Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smokelauncher.app;
+				PRODUCT_NAME = "Smoke Launcher";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B5796B4F0F0D072E3A4FFDFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		962A72669CCCADCF881408D7 /* Build configuration list for PBXNativeTarget "Smoke Launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A627103FD30A3B26A867F283 /* Debug */,
+				3A8901A4E80405E197AAC472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E85D6935F1629D8D28426A49 /* Build configuration list for PBXProject "Smoke Launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55354157DC3E4C4816598DA3 /* Debug */,
+				B5796B4F0F0D072E3A4FFDFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 587F3F3BCA58FA5AD991F189 /* Project object */;
+}
