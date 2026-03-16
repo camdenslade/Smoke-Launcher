@@ -7,7 +7,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [1.0.0] — 2026-03-16
+## [1.0.1] - 2026-03-16
+
+### Fixed
+- Steam artwork now resolves correctly for newer games by falling back to the Store API when the legacy CDN path returns 404
+- Sidebar game icons now use Steam's dedicated square community icons instead of a cropped header image
+- Hero banner art displays at the correct 460x215 aspect ratio instead of being aggressively cropped
+
+### Added
+- App icon (dock and title bar) now shows the Smoke Launcher logo
+
+---
+
+## [1.0.0] - 2026-03-16
 
 ### Added
 - First public release

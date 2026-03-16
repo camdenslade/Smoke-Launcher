@@ -23,7 +23,7 @@ struct GlassCard: ViewModifier {
                                 endPoint: .bottomTrailing
                             ))
                     }
-                    // Edge highlight — the "glass rim" refraction effect
+                    // Edge highlight - the "glass rim" refraction effect
                     .overlay {
                         RoundedRectangle(cornerRadius: cornerRadius)
                             .stroke(

@@ -105,12 +105,30 @@ final class GameManager: ObservableObject {
         var changed = false
         for i in games.indices where games[i].steamAppID == nil {
             let folderName = games[i].exePath.deletingLastPathComponent().lastPathComponent
-            if let appID = appIDMap[folderName.lowercased()] {
+            if let appID = bestMatch(for: folderName, in: appIDMap) {
                 games[i].steamAppID = appID
                 changed = true
             }
         }
         if changed { try? save() }
+    }
+
+    /// Finds the best appID match for a folder name, tolerating apostrophe/unicode differences.
+    private func bestMatch(for folderName: String, in map: [String: String]) -> String? {
+        // 1. Exact lowercased match
+        if let id = map[folderName.lowercased()] { return id }
+
+        // 2. Normalize: strip punctuation, fold diacritics, collapse whitespace
+        let normalize: (String) -> String = { s in
+            s.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+             .components(separatedBy: .punctuationCharacters).joined()
+             .components(separatedBy: .whitespaces).filter { !$0.isEmpty }.joined(separator: " ")
+        }
+        let target = normalize(folderName)
+        for (installDir, appID) in map {
+            if normalize(installDir) == target { return appID }
+        }
+        return nil
     }
 
     /// Parses appmanifest_*.acf files to build a map of installdir (lowercased) → appID.

@@ -66,6 +66,7 @@ struct ContentView: View {
                     Image("SmokeTransparent")
                         .resizable()
                         .interpolation(.high)
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 64, height: 64)
                         .opacity(0.25)
                     Text("No game selected")

@@ -15,6 +15,7 @@ struct SetupView: View {
                     Image("SmokeTransparent")
                         .resizable()
                         .interpolation(.high)
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 32, height: 32)
                     Text("Smoke Launcher")
                         .font(.headline)

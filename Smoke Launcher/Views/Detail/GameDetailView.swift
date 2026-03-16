@@ -24,11 +24,12 @@ struct GameDetailView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    // Hero banner — Steam header art with gradient overlay
+                    // Hero banner - Steam header art with gradient overlay
                     ZStack(alignment: .bottomLeading) {
-                        SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0)
+                        SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0, contentMode: .fit)
                             .frame(maxWidth: .infinity)
-                            .frame(height: 160)
+                            .aspectRatio(460.0 / 215.0, contentMode: .fit)
+                            .frame(maxHeight: 260)
 
                         // Gradient scrim so text is readable over any art
                         LinearGradient(
@@ -68,6 +69,9 @@ struct GameDetailView: View {
                         // Info strip
                         HStack(spacing: 8) {
                             infoChip(icon: "cylinder.split.1x2", label: bottle?.name ?? "No bottle")
+                            #if DEBUG
+                            infoChip(icon: "number", label: liveGame.steamAppID ?? "no app id")
+                            #endif
                             infoChip(icon: "cpu", label: (bottle?.dxvkEnabled ?? false) ? "DXVK On" : "DXVK Off",
                                      color: (bottle?.dxvkEnabled ?? false) ? .green : .white.opacity(0.5))
                             infoChip(icon: "clock", label: liveGame.lastPlayedAt.map {
@@ -174,7 +178,7 @@ struct GameSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Settings — \(game.displayName)")
+            Text("Settings - \(game.displayName)")
                 .font(.title2.bold())
 
             if let b = bottle {
