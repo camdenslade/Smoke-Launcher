@@ -34,8 +34,8 @@ Smoke Launcher/
 
 ## Architecture Notes
 
-- All managers are `@MainActor final class` conforming to `ObservableObject`. Each has an `init()` that calls its own load/check method — do **not** call `wrappedValue` on `@StateObject` from `App.init()`.
-- Game launching uses `AsyncThrowingStream<String, Error>` streamed from `ShellRunner`. Avoid `waitUntilExit()` on the MainActor — use `Task.sleep` instead.
+- All managers are `@MainActor final class` conforming to `ObservableObject`. Each has an `init()` that calls its own load/check method - do **not** call `wrappedValue` on `@StateObject` from `App.init()`.
+- Game launching uses `AsyncThrowingStream<String, Error>` streamed from `ShellRunner`. Avoid `waitUntilExit()` on the MainActor - use `Task.sleep` instead.
 - `Game` and `Bottle` are `Codable` structs persisted as JSON in Application Support. Add new optional fields with `?` to maintain backwards compatibility.
 - `SteamManager` pins a Steam build version via `steam.cfg`. If `steamui.dll` is missing on launch, the recovery path deletes `steam.cfg` and clears the pin.
 
@@ -44,22 +44,22 @@ Smoke Launcher/
 1. Create the `.swift` file under the appropriate `Views/` subfolder.
 2. Add it to the Xcode project target (Sources build phase in `project.pbxproj`).
 3. Use `.glassCard()` for content cards and `AmbientBackground` for full-pane backgrounds.
-4. Pass `@EnvironmentObject` down from `ContentView` — do not instantiate managers directly in views.
+4. Pass `@EnvironmentObject` down from `ContentView` - do not instantiate managers directly in views.
 
 ## Versioning
 
 This project uses [Semantic Versioning](https://semver.org/):
 
-- **MAJOR** — breaking changes to the Wine runtime format or bottle schema
-- **MINOR** — new features (new manager, new game source, new UI section)
-- **PATCH** — bug fixes, UI tweaks, crash fixes
+- **MAJOR** - breaking changes to the Wine runtime format or bottle schema
+- **MINOR** - new features (new manager, new game source, new UI section)
+- **PATCH** - bug fixes, UI tweaks, crash fixes
 
 Releases are tagged `vMAJOR.MINOR.PATCH` and published with a DMG attached.
 
 ## Pull Requests
 
 1. Branch from `main`: `git checkout -b feat/my-feature`
-2. Keep changes focused — one feature or fix per PR
+2. Keep changes focused - one feature or fix per PR
 3. Test the full setup flow (runtime install → bottle → Steam) if touching managers
 4. Update `CHANGELOG.md` under `[Unreleased]`
 

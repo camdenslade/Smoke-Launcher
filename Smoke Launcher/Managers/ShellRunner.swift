@@ -37,7 +37,7 @@ actor ShellRunner {
                 q.async { yield(handle.availableData) }
             }
             errPipe.fileHandleForReading.readabilityHandler = { handle in
-                // Wine/winetricks flood stderr with fixme:/err: noise — label it but keep it subtle
+                // Wine/winetricks flood stderr with fixme:/err: noise - label it but keep it subtle
                 q.async { yield(handle.availableData, prefix: "[wine] ") }
             }
 
@@ -49,7 +49,7 @@ actor ShellRunner {
                     yield(errPipe.fileHandleForReading.readDataToEndOfFile(), prefix: "[wine] ")
                     if p.terminationStatus == 0 || allowingFailure {
                         if p.terminationStatus != 0 {
-                            continuation.yield("(exited \(p.terminationStatus) — continuing)")
+                            continuation.yield("(exited \(p.terminationStatus) - continuing)")
                         }
                         continuation.finish()
                     } else {

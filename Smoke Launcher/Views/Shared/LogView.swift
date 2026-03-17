@@ -30,8 +30,8 @@ struct LogView: View {
     }
 
     private func lineColor(_ line: String) -> Color {
-        if line.hasPrefix("[wine]") { return .secondary.opacity(0.6) }  // Wine noise — dimmed
-        if line.hasPrefix("[err]") { return .red.opacity(0.8) }         // Real errors — red
+        if line.hasPrefix("[wine]") { return .secondary.opacity(0.6) }  // Wine noise - dimmed
+        if line.hasPrefix("[err]") { return .red.opacity(0.8) }         // Real errors - red
         if line.lowercased().contains("error") { return .orange }
         if line.lowercased().contains("complete") || line.lowercased().contains("success") { return .green }
         return .primary

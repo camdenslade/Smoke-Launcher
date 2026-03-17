@@ -29,3 +29,6 @@ playground.xcworkspace
 Pods/
 Podfile.lock
 /.claude/
+
+# Personal notes
+SWIFT_NOTES.md

@@ -8,7 +8,7 @@ struct RuntimeDownloadView: View {
             Label("Download Runtime", systemImage: "arrow.down.circle")
                 .font(.title2.bold())
 
-            Text("Smoke Launcher bundles its own Wine runtime — no external tools needed.")
+            Text("Smoke Launcher bundles its own Wine runtime - no external tools needed.")
                 .foregroundStyle(.secondary)
 
             // Component list

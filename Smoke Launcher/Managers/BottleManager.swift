@@ -17,7 +17,7 @@ final class BottleManager: ObservableObject {
     // MARK: - Bottle Creation
 
     func createBottle(name: String, arch: WineArch = .win64, winePath: String) async throws -> Bottle {
-        // Return existing bottle if already created — prevents duplicates on repeated setup runs
+        // Return existing bottle if already created - prevents duplicates on repeated setup runs
         if let existing = bottles.first(where: { $0.name == name }) {
             appendLog("Bottle '\(name)' already exists, reusing.")
             return existing
@@ -47,7 +47,7 @@ final class BottleManager: ObservableObject {
             appendLog(line)
         }
 
-        // Disable the Wine crash debugger popup — when a Windows process crashes under Wine,
+        // Disable the Wine crash debugger popup - when a Windows process crashes under Wine,
         // this prevents the "Wine Debugger" window from appearing.
         let wineregPath = URL(fileURLWithPath: winePath)
             .deletingLastPathComponent()

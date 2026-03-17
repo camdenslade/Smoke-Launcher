@@ -10,12 +10,12 @@ A native macOS launcher for Windows games via Wine, with a liquid glass SwiftUI 
 
 ## Features
 
-- **Automatic Steam game detection** — Parses Steam ACF manifests to find installed games and artwork when Steam closes
-- **Wine bottle management** — Create isolated Wine environments with per-bottle DXVK (DirectX → Metal) and ESync toggles
-- **Steam CDN artwork** — Game icons and hero banners pulled from Valve's CDN automatically
-- **Liquid glass UI** — Deep charcoal color scheme with `ultraThinMaterial` glass cards, ambient background art, and smooth animations
-- **One-click Steam** — Launch the Steam UI into a managed Wine bottle straight from the toolbar
-- **Live output log** — See Wine/game stdout in real time from the detail pane
+- **Automatic Steam game detection** - Parses Steam ACF manifests to find installed games and artwork when Steam closes
+- **Wine bottle management** - Create isolated Wine environments with per-bottle DXVK (DirectX → Metal) and ESync toggles
+- **Steam CDN artwork** - Game icons and hero banners pulled from Valve's CDN automatically
+- **Liquid glass UI** - Deep charcoal color scheme with `ultraThinMaterial` glass cards, ambient background art, and smooth animations
+- **One-click Steam** - Launch the Steam UI into a managed Wine bottle straight from the toolbar
+- **Live output log** - See Wine/game stdout in real time from the detail pane
 
 ## Requirements
 
@@ -27,7 +27,7 @@ A native macOS launcher for Windows games via Wine, with a liquid glass SwiftUI 
 
 1. Download the latest `SmokeLauncher.dmg` from [Releases](https://github.com/camdenslade/Smoke-Launcher/releases)
 2. Open the DMG and drag **Smoke Launcher** to your Applications folder
-3. Launch the app — the setup wizard will guide you through installing the Wine runtime and Steam
+3. Launch the app - the setup wizard will guide you through installing the Wine runtime and Steam
 
 ## Building from Source
 
@@ -46,19 +46,19 @@ Then build and run with **⌘R** in Xcode.
 ```
 Smoke Launcher
 ├── Managers/
-│   ├── RuntimeManager   — Downloads & verifies the Wine runtime bundle
-│   ├── BottleManager    — Creates and manages Wine prefix environments
-│   ├── SteamManager     — Installs Steam, pins versions, launches Steam UI
-│   └── GameManager      — Scans ACF manifests, registers & launches games
+│   ├── RuntimeManager   - Downloads & verifies the Wine runtime bundle
+│   ├── BottleManager    - Creates and manages Wine prefix environments
+│   ├── SteamManager     - Installs Steam, pins versions, launches Steam UI
+│   └── GameManager      - Scans ACF manifests, registers & launches games
 ├── Views/
-│   ├── Library/         — Sidebar game list with glass row cards
-│   ├── Detail/          — Hero banner, play button, output log
-│   ├── Setup/           — First-run wizard (runtime → bottle → Steam)
-│   └── Shared/          — GlassModifier, SteamArtworkView, LogView
+│   ├── Library/         - Sidebar game list with glass row cards
+│   ├── Detail/          - Hero banner, play button, output log
+│   ├── Setup/           - First-run wizard (runtime → bottle → Steam)
+│   └── Shared/          - GlassModifier, SteamArtworkView, LogView
 └── Models/
-    ├── Game             — Codable game record with steamAppID
-    ├── Bottle           — Wine prefix with DXVK/ESync flags
-    └── SteamBuild       — Pinned Steam version metadata
+    ├── Game             - Codable game record with steamAppID
+    ├── Bottle           - Wine prefix with DXVK/ESync flags
+    └── SteamBuild       - Pinned Steam version metadata
 ```
 
 ## Tech Stack
@@ -74,4 +74,4 @@ Smoke Launcher
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT - see [LICENSE](LICENSE)

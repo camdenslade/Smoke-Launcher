@@ -13,7 +13,7 @@ struct SteamInstallView: View {
         && !steamManager.installLog.contains(where: { $0.contains("Shutting down") })
     }
 
-    /// True during the bootstrap phase — Steam is downloading its components silently.
+    /// True during the bootstrap phase - Steam is downloading its components silently.
     var isBootstrapping: Bool {
         steamManager.installLog.contains(where: { $0.contains("Starting Steam for first-run") })
         && !steamManager.installLog.contains(where: { $0.contains("first-run complete") || $0.contains("Steam components already") })
@@ -38,7 +38,7 @@ struct SteamInstallView: View {
                     icon: "cursorarrow.click",
                     color: .orange,
                     title: "Action required",
-                    message: "A Steam installer window appeared. Click through it — if Steam launches at the end and shows an error, just dismiss it and return here."
+                    message: "A Steam installer window appeared. Click through it - if Steam launches at the end and shows an error, just dismiss it and return here."
                 )
             }
 

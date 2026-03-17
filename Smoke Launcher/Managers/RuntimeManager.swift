@@ -66,7 +66,7 @@ final class RuntimeManager: ObservableObject {
             isInstalled = true
         } else {
             isInstalled = false
-            // Partial install detected — clean up so the next attempt starts fresh.
+            // Partial install detected - clean up so the next attempt starts fresh.
             // Skip cleanup only if we have resume data (user deliberately paused the download).
             let hasResume = FileManager.default.fileExists(atPath: PathProvider.wineResumeData.path)
             if !hasResume {
@@ -81,7 +81,7 @@ final class RuntimeManager: ObservableObject {
         let fm = FileManager.default
         var cleaned: [String] = []
 
-        // 1. Partial Wine extraction — wineRootDir exists but binary is missing/incomplete
+        // 1. Partial Wine extraction - wineRootDir exists but binary is missing/incomplete
         if fm.fileExists(atPath: PathProvider.wineRootDir.path) {
             try? fm.removeItem(at: PathProvider.wineRootDir)
             try? fm.createDirectory(at: PathProvider.wineRootDir, withIntermediateDirectories: true)
@@ -117,7 +117,7 @@ final class RuntimeManager: ObservableObject {
         hasResumeData = false
     }
 
-    /// Called by the app delegate on quit — saves resume data so the next launch can continue.
+    /// Called by the app delegate on quit - saves resume data so the next launch can continue.
     func prepareForTermination() {
         guard let task = activeDownloadTask else { return }
         // Synchronously cancel and capture resume data before the process exits.
@@ -236,7 +236,7 @@ final class RuntimeManager: ObservableObject {
             appendLog("Resuming interrupted download...")
         }
 
-        // Speed window lives on the delegate queue — wrapped in a class so the
+        // Speed window lives on the delegate queue - wrapped in a class so the
         // closure can mutate it without capturing a `var` across concurrency boundaries.
         final class SpeedWindow {
             var start = Date()
@@ -277,7 +277,7 @@ final class RuntimeManager: ObservableObject {
                 session.invalidateAndCancel()
 
                 if let error {
-                    // Ignore cancellation errors — prepareForTermination already saved resume data
+                    // Ignore cancellation errors - prepareForTermination already saved resume data
                     // and the app is quitting. Resuming the continuation here is harmless but
                     // avoids flashing an error in the UI on a slow quit.
                     let nsErr = error as NSError
@@ -408,7 +408,7 @@ private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
     var progressHandler: ((_ bytesWritten: Int64, _ totalWritten: Int64, _ totalExpected: Int64) -> Void)?
     var completionHandler: ((URL?, URLResponse?, Error?) -> Void)?
 
-    // Called repeatedly as data arrives — totalBytesWritten is cumulative
+    // Called repeatedly as data arrives - totalBytesWritten is cumulative
     func urlSession(
         _ session: URLSession,
         downloadTask: URLSessionDownloadTask,
@@ -441,7 +441,7 @@ enum RuntimeError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .assetNotFound(let repo): return "No matching release asset found in \(repo)"
-        case .wineNotExtracted: return "Wine was not extracted correctly — binary not found"
+        case .wineNotExtracted: return "Wine was not extracted correctly - binary not found"
         case .dxvkExtractionFailed: return "DXVK archive extraction failed"
         case .winetricksDownloadFailed(let code): return "winetricks download failed with HTTP \(code)"
         }

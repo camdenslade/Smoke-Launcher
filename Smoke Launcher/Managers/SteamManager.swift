@@ -39,9 +39,9 @@ final class SteamManager: ObservableObject {
 
         let env = bottleEnv(bottle)
 
-        // Step 2: Run installer (not silent — /S is unreliable under Wine)
+        // Step 2: Run installer (not silent - /S is unreliable under Wine)
         appendLog("Running Steam installer...")
-        appendLog("A Steam installer window will appear — click through it. If Steam launches at the end and shows an error, dismiss it and return here.")
+        appendLog("A Steam installer window will appear - click through it. If Steam launches at the end and shows an error, dismiss it and return here.")
         for try await line in await shell.stream(
             bottle.winePath,
             args: [installer.path],
@@ -57,7 +57,7 @@ final class SteamManager: ObservableObject {
         // Between step 2 and 3: The installer may have launched Steam (via "Run Steam"
         // checkbox). That instance will fail with "steamui.dll not found" because the
         // client hasn't bootstrapped yet. Send -shutdown to kill it before we start our
-        // own controlled bootstrap — Steam is single-instance, so two running copies
+        // own controlled bootstrap - Steam is single-instance, so two running copies
         // will fight each other.
         appendLog("Shutting down any installer-launched Steam...")
         let shutdownProcess = Process()
@@ -65,11 +65,11 @@ final class SteamManager: ObservableObject {
         shutdownProcess.arguments = [steamDir.appendingPathComponent("Steam.exe").path, "-shutdown"]
         shutdownProcess.environment = mergedEnv(env)
         try? shutdownProcess.run()
-        // Don't call waitUntilExit() — that blocks the MainActor. Just give it time.
+        // Don't call waitUntilExit() - that blocks the MainActor. Just give it time.
         try await Task.sleep(nanoseconds: 4_000_000_000)
         appendLog("Shutdown done (running: \(shutdownProcess.isRunning))")
 
-        // Step 3: First-run Steam bootstrap — Steam downloads steamui.dll and
+        // Step 3: First-run Steam bootstrap - Steam downloads steamui.dll and
         // the rest of its client on first launch. We must let this complete
         // BEFORE locking the version, otherwise steamui.dll won't exist.
         appendLog("steamui.dll exists: \(FileManager.default.fileExists(atPath: steamuiDll.path))")
@@ -78,12 +78,12 @@ final class SteamManager: ObservableObject {
             appendLog("Steam.exe exists: \(FileManager.default.fileExists(atPath: steamExe.path))")
             appendLog("Steam.exe path: \(steamExe.path)")
             appendLog("Starting Steam for first-run update (downloading steamui.dll)...")
-            appendLog("This may take a few minutes — Steam is downloading its components in the background.")
+            appendLog("This may take a few minutes - Steam is downloading its components in the background.")
 
             let outPipe = Pipe()
             let bootstrapProcess = Process()
             bootstrapProcess.executableURL = URL(fileURLWithPath: bottle.winePath)
-            // No -nostartupdialog — that flag can suppress the update download trigger
+            // No -nostartupdialog - that flag can suppress the update download trigger
             bootstrapProcess.arguments = [steamExe.path, "-no-cef-sandbox", "-disable-gpu", "-silent"]
             var bootstrapEnv = mergedEnv(env)
             bootstrapEnv["WINEDEBUG"] = "err+all"  // Only real errors, not fixme noise
@@ -91,14 +91,14 @@ final class SteamManager: ObservableObject {
             bootstrapProcess.standardOutput = outPipe
             bootstrapProcess.standardError = outPipe
 
-            // Stream bootstrap output in background (inherits MainActor — no Sendable issue)
+            // Stream bootstrap output in background (inherits MainActor - no Sendable issue)
             let outHandle = outPipe.fileHandleForReading
             Task { [weak self] in
                 do {
                     for try await line in outHandle.bytes.lines {
                         self?.appendLog("[boot] \(line)")
                     }
-                } catch { /* pipe closed on process exit — expected */ }
+                } catch { /* pipe closed on process exit - expected */ }
             }
 
             try bootstrapProcess.run()
@@ -107,7 +107,7 @@ final class SteamManager: ObservableObject {
             // Poll until steamui.dll appears (up to 8 minutes).
             // IMPORTANT: Steam self-restarts during bootstrap (first process downloads the
             // update and exits, second process installs it). Do NOT break when the original
-            // process exits — keep polling until steamui.dll actually appears.
+            // process exits - keep polling until steamui.dll actually appears.
             let deadline = Date().addingTimeInterval(480)
             var pollCount = 0
             while !FileManager.default.fileExists(atPath: steamuiDll.path) {
@@ -127,7 +127,7 @@ final class SteamManager: ObservableObject {
                 if pollCount % 2 == 0 { logSteamDir(steamDir, label: "poll-\(pollCount)") }
                 // If original process exited AND dll still missing after 3 more polls, give up
                 if !bootstrapProcess.isRunning && pollCount > 3 {
-                    appendLog("Bootstrap exited and steamui.dll still absent after \(pollCount) polls — giving up.")
+                    appendLog("Bootstrap exited and steamui.dll still absent after \(pollCount) polls - giving up.")
                     logSteamDir(steamDir, label: "after-exit")
                     searchForFile(named: "steamui.dll", under: steamDir)
                     break
@@ -214,13 +214,13 @@ final class SteamManager: ObservableObject {
             // It blocks Steam from downloading its own files. Remove it so Steam can recover.
             let cfgURL = PathProvider.steamCfg(in: bottle)
             if FileManager.default.fileExists(atPath: cfgURL.path) {
-                appendLog("steamui.dll missing but steam.cfg exists — removing pin so Steam can update itself.")
+                appendLog("steamui.dll missing but steam.cfg exists - removing pin so Steam can update itself.")
                 try? FileManager.default.removeItem(at: cfgURL)
             }
             // Clear the saved build record so setup shows again after this session
             try? FileManager.default.removeItem(at: PathProvider.steamBuildFile)
             pinnedBuild = nil
-            appendLog("Launching Steam in recovery mode — it will download its components now. This may take a few minutes.")
+            appendLog("Launching Steam in recovery mode - it will download its components now. This may take a few minutes.")
         }
 
         appendLog("Launching: \(steamExe.path)")
