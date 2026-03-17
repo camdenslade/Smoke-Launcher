@@ -12,9 +12,10 @@ struct PathProvider {
     static let configDir: URL = appSupport.appendingPathComponent("config")
     static let bottleSettingsFile: URL = configDir.appendingPathComponent("bottle_settings.json")
     static let gamesFile: URL = configDir.appendingPathComponent("games.json")
+    static let backupsDirectory: URL = appSupport.appendingPathComponent("backups")
     static let steamBuildFile: URL = configDir.appendingPathComponent("steam_build.json")
 
-    // Runtime — bundled Wine, DXVK, winetricks
+    // Runtime - bundled Wine, DXVK, winetricks
     static let runtimeDir: URL = appSupport.appendingPathComponent("runtime")
     static let wineRootDir: URL = runtimeDir.appendingPathComponent("wine")
     static let winetricksScript: URL = runtimeDir.appendingPathComponent("winetricks")
@@ -37,18 +38,18 @@ struct PathProvider {
 
     static var wineBinDir: URL? { wineBinary?.deletingLastPathComponent() }
 
-    /// Base Wine environment for macOS. Use this everywhere — never build env vars ad-hoc.
+    /// Base Wine environment for macOS. Use this everywhere - never build env vars ad-hoc.
     static func wineEnvironment(prefixPath: URL, arch: WineArch, bottle: Bottle? = nil) -> [String: String] {
         let existingPath = ProcessInfo.processInfo.environment["PATH"] ?? "/usr/bin:/bin"
         var env: [String: String] = [
             "WINEPREFIX":               prefixPath.path,
             "WINEARCH":                 arch.rawValue,
             // MSync = macOS-native sync via Mach semaphores. No fd-limit issues.
-            // ESync requires 500k file descriptors — macOS hard-caps at ~10k → "cannot allocate memory"
+            // ESync requires 500k file descriptors - macOS hard-caps at ~10k → "cannot allocate memory"
             "WINEMSYNC":                "1",
             "WINEESYNC":                "0",
-            // Silence the fixme:/err: flood — real errors still surface through process exit codes
-            "WINEDEBUG":                "-all",
+            // Show only actionable error channels; suppress the fixme/trace flood
+            "WINEDEBUG":                "err+module,err+seh,err+wgl,err+d3d,-fixme",
             // MoltenVK: recover lost device instead of crashing on GPU reset
             "MVK_CONFIG_RESUME_LOST_DEVICE": "1",
         ]

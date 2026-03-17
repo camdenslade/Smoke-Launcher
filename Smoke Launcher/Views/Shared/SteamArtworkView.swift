@@ -37,9 +37,15 @@ final class SteamImageCache {
         return await fetchAppDetails(appID: appID)?["header_image"].flatMap { URL(string: $0) }
     }
 
-    // MARK: Square icon (from community CDN)
+    // MARK: Square icon
 
-    func iconURL(for appID: String) async -> URL? {
+    /// Returns a local file URL (from the Wine bottle) when available, otherwise a CDN URL.
+    func iconURL(for appID: String, bottlePrefix: URL? = nil) async -> URL? {
+        // Check local .ico file first - instant, no network needed
+        if let prefix = bottlePrefix, let localURL = localIconURL(appID: appID, bottlePrefix: prefix) {
+            return localURL
+        }
+        // Fall back to CDN
         if let cached = iconCache[appID] { return cached }
         if let existing = iconInFlight[appID] { return await existing.value }
         let task = Task<URL?, Never> { await self.fetchIconURL(appID: appID) }
@@ -50,9 +56,25 @@ final class SteamImageCache {
         return result
     }
 
+    /// Finds the icon JPEG Steam caches at `appcache/librarycache/{appID}/{hash}.jpg`.
+    /// These are the direct .jpg files in the appID folder - subdirectories contain other art types.
+    private func localIconURL(appID: String, bottlePrefix: URL) -> URL? {
+        let cacheDir = bottlePrefix
+            .appendingPathComponent("drive_c/Program Files (x86)/Steam/appcache/librarycache")
+            .appendingPathComponent(appID)
+        guard let items = try? FileManager.default.contentsOfDirectory(
+            at: cacheDir, includingPropertiesForKeys: nil
+        ) else { return nil }
+        return items.first { $0.pathExtension.lowercased() == "jpg" }
+    }
+
     private func fetchIconURL(appID: String) async -> URL? {
-        guard let hash = await fetchAppDetails(appID: appID)?["icon"] else { return nil }
-        return URL(string: "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/\(appID)/\(hash).jpg")
+        // Try community icon hash from appdetails
+        if let hash = await fetchAppDetails(appID: appID)?["icon"], !hash.isEmpty {
+            return URL(string: "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/\(appID)/\(hash).jpg")
+        }
+        // Fall back to library portrait art - predictable URL, visually distinct from header
+        return URL(string: "https://cdn.cloudflare.steamstatic.com/steam/apps/\(appID)/library_600x900.jpg")
     }
 
     // MARK: Shared appdetails fetch
@@ -112,37 +134,43 @@ struct SteamArtworkView: View {
     }
 }
 
-// MARK: - Square icon (cropped from header art)
+// MARK: - Square icon (local .ico from Wine bottle, with CDN fallback)
 
 struct SteamIconView: View {
     let appID: String?
+    var bottlePrefix: URL?
     var size: CGFloat = 34
     var cornerRadius: CGFloat = 8
 
+    @State private var localIcon: NSImage?
     @State private var resolvedURL: URL?
 
     var body: some View {
         Group {
-            if let url = resolvedURL {
-                AsyncImage(url: url) { image in
-                    image.resizable().aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    fallback
-                }
+            if let img = localIcon {
+                Image(nsImage: img).resizable().aspectRatio(contentMode: .fill)
             } else {
-                fallback
+                AsyncImage(url: resolvedURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().aspectRatio(contentMode: .fill)
+                    default:
+                        fallback
+                    }
+                }
             }
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         .task(id: appID) {
+            localIcon = nil
             resolvedURL = nil
             guard let id = appID else { return }
-            // Prefer the dedicated square icon; fall back to header art
-            if let iconURL = await SteamImageCache.shared.iconURL(for: id) {
-                resolvedURL = iconURL
+            guard let url = await SteamImageCache.shared.iconURL(for: id, bottlePrefix: bottlePrefix) else { return }
+            if url.isFileURL {
+                localIcon = NSImage(contentsOf: url)
             } else {
-                resolvedURL = await SteamImageCache.shared.headerURL(for: id)
+                resolvedURL = url
             }
         }
     }

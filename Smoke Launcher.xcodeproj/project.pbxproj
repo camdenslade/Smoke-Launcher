@@ -32,6 +32,7 @@
 		AF087ADDC03192C55C5C1991 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67EADA3E26DEC0A4311AD43 /* Game.swift */; };
 		B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A28FC4EE091F02B47438A /* DetectedGamesView.swift */; };
 		CD6C66C97B6735E85BE8C12D /* SteamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A457939C86F30B918B89E5 /* SteamManager.swift */; };
+		B4C5D6E7F8A9B0C1D2E3F4A5 /* TrialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */; };
 		DE532A77FD415C2F79D3CFAD /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321C6BC912AB8C71A84389F4 /* LibraryView.swift */; };
 		E5E7810E010B645E46742FC5 /* GameRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E3CA048829A1EE03CB787 /* GameRowView.swift */; };
 		EA298FAA931B632375EEFFCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91889D43B804B9902E96CCE3 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		321C6BC912AB8C71A84389F4 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		330E3CA048829A1EE03CB787 /* GameRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRowView.swift; sourceTree = "<group>"; };
 		33A457939C86F30B918B89E5 /* SteamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamManager.swift; sourceTree = "<group>"; };
+		A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialManager.swift; sourceTree = "<group>"; };
 		36217793D8BA20E0A847ECFA /* SteamBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamBuild.swift; sourceTree = "<group>"; };
 		3BE87F93647895A9B79B9385 /* ProgressOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressOverlay.swift; sourceTree = "<group>"; };
 		5043005F930A0D4DE87642B7 /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */,
 				D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */,
 				33A457939C86F30B918B89E5 /* SteamManager.swift */,
+				A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				4CD1D687293DB64A9684185F /* SteamBuild.swift in Sources */,
 				615ECD100EAEE2357C025987 /* SteamInstallView.swift in Sources */,
 				CD6C66C97B6735E85BE8C12D /* SteamManager.swift in Sources */,
+				B4C5D6E7F8A9B0C1D2E3F4A5 /* TrialManager.swift in Sources */,
 				F1A2B3C4D5E6F7A8B9C0D1E2 /* GlassModifier.swift in Sources */,
 				F2A3B4C5D6E7F8A9B0C1D2E3 /* SteamArtworkView.swift in Sources */,
 			);

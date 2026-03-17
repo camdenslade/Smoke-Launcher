@@ -12,31 +12,54 @@ struct LibraryView: View {
     @State private var searchText = ""
     @State private var steamError: String?
     @State private var autoScanBanner: String?
+    @AppStorage("library.sortOrder") private var sortOrderRaw: String = "lastPlayed"
+
+    private var sortOrder: LibrarySortOrder {
+        get { LibrarySortOrder(rawValue: sortOrderRaw) ?? .lastPlayed }
+        set { sortOrderRaw = newValue.rawValue }
+    }
 
     var bottle: Bottle? { bottleManager.bottles.first }
 
     var filteredGames: [Game] {
-        if searchText.isEmpty { return gameManager.games }
-        return gameManager.games.filter { $0.displayName.localizedCaseInsensitiveContains(searchText) }
+        let base = searchText.isEmpty
+            ? gameManager.games
+            : gameManager.games.filter { $0.displayName.localizedCaseInsensitiveContains(searchText) }
+        switch sortOrder {
+        case .name:       return base.sorted { $0.displayName.localizedCompare($1.displayName) == .orderedAscending }
+        case .lastPlayed: return base.sorted { ($0.lastPlayedAt ?? .distantPast) > ($1.lastPlayedAt ?? .distantPast) }
+        case .playTime:   return base.sorted { $0.totalPlayTime > $1.totalPlayTime }
+        }
+    }
+
+    @ViewBuilder
+    private var bannerRow: some View {
+        if let banner = autoScanBanner {
+            HStack(spacing: 8) {
+                Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                Text(banner).font(.caption).foregroundStyle(.white.opacity(0.8))
+                Spacer()
+                Button { autoScanBanner = nil } label: {
+                    Image(systemName: "xmark").font(.caption2).foregroundStyle(.white.opacity(0.4))
+                }
+                .buttonStyle(.borderless)
+            }
+            .padding(.vertical, 6)
+            .listRowBackground(Color.green.opacity(0.12))
+            .listRowSeparator(.hidden)
+        }
+    }
+
+    private var sortBinding: Binding<LibrarySortOrder> {
+        Binding(
+            get: { LibrarySortOrder(rawValue: sortOrderRaw) ?? .lastPlayed },
+            set: { sortOrderRaw = $0.rawValue }
+        )
     }
 
     var body: some View {
         List(selection: $selectedGame) {
-            if let banner = autoScanBanner {
-                HStack(spacing: 8) {
-                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                    Text(banner).font(.caption).foregroundStyle(.white.opacity(0.8))
-                    Spacer()
-                    Button { autoScanBanner = nil } label: {
-                        Image(systemName: "xmark").font(.caption2).foregroundStyle(.white.opacity(0.4))
-                    }
-                    .buttonStyle(.borderless)
-                }
-                .padding(.vertical, 6)
-                .listRowBackground(Color.green.opacity(0.12))
-                .listRowSeparator(.hidden)
-            }
-
+            bannerRow
             gameListContent
         }
         .listStyle(.sidebar)
@@ -59,6 +82,17 @@ struct LibraryView: View {
                 }
                 .help("Detect installed Steam games")
                 .disabled(bottle == nil)
+
+                Menu {
+                    Picker("Sort", selection: sortBinding) {
+                        Label("Last Played", systemImage: "clock").tag(LibrarySortOrder.lastPlayed)
+                        Label("Name", systemImage: "textformat").tag(LibrarySortOrder.name)
+                        Label("Play Time", systemImage: "hourglass").tag(LibrarySortOrder.playTime)
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                }
+                .help("Sort library")
 
                 Button { showAddGame = true } label: {
                     Image(systemName: "plus")
@@ -117,7 +151,8 @@ struct LibraryView: View {
                 GameRowView(
                     game: game,
                     isRunning: gameManager.runningGameID == game.id,
-                    isSelected: selectedGame?.id == game.id
+                    isSelected: selectedGame?.id == game.id,
+                    bottlePrefix: bottleManager.bottles.first { $0.id == game.bottleID }?.prefixPath
                 )
                 .tag(game)
                 .listRowBackground(Color.clear)
@@ -151,4 +186,8 @@ struct LibraryView: View {
             showDetected = true
         }
     }
+}
+
+enum LibrarySortOrder: String {
+    case name, lastPlayed, playTime
 }

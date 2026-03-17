@@ -7,6 +7,28 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.0.2] - 2026-03-16
+
+### Added
+- Playtime tracking: total time played is accumulated per session and shown in the sidebar and detail pane
+- Sort library by last played, name, or play time - persisted across launches
+- Launch arguments field in game settings
+- Save backup: zips `drive_c/users` from the Wine bottle to `~/Library/Application Support/SmokeLauncher/backups/`
+- Game rename, bottle picker, and delete button in game settings
+- Trial mode: 3 free launches, then a paywall (Stripe)
+- Exit notification: system notification when a game process closes
+- Wine error parsing: actionable errors surfaced in the output log instead of raw debug noise
+- "Check for Updates" menu item linking to GitHub releases
+
+### Fixed
+- Hero banner art now scales proportionally to any window width with no cropping
+- Sidebar icons now load from Steam's local librarycache (`appcache/librarycache/{appID}/*.jpg`) - no network request, shows the actual game icon
+- `WINEDEBUG` changed from `-all` to targeted channels so the Wine error parser receives output
+- Steam App ID field restricted to digits only
+- Backup filename sanitized to prevent path traversal
+
+---
+
 ## [1.0.1] - 2026-03-16
 
 ### Fixed
@@ -40,4 +62,6 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - `AmbientBackground` view: blurred game art over charcoal with `plusLighter` blend
 - Deep charcoal color scheme forced dark mode app-wide
 
+[1.0.2]: https://github.com/camdenslade/Smoke-Launcher/releases/tag/v1.0.2
+[1.0.1]: https://github.com/camdenslade/Smoke-Launcher/releases/tag/v1.0.1
 [1.0.0]: https://github.com/camdenslade/Smoke-Launcher/releases/tag/v1.0.0

@@ -42,6 +42,7 @@ final class GameManager: ObservableObject {
         return AsyncThrowingStream { continuation in
             Task {
                 await MainActor.run { self.runningGameID = game.id }
+                let startTime = Date()
                 var games = await MainActor.run { self.games }
                 if let idx = games.firstIndex(where: { $0.id == game.id }) {
                     games[idx].lastPlayedAt = Date()
@@ -64,7 +65,15 @@ final class GameManager: ObservableObject {
                     continuation.finish(throwing: error)
                 }
 
-                await MainActor.run { self.runningGameID = nil }
+                // Accumulate playtime
+                let elapsed = Date().timeIntervalSince(startTime)
+                await MainActor.run {
+                    if let idx = self.games.firstIndex(where: { $0.id == game.id }) {
+                        self.games[idx].totalPlayTime += elapsed
+                        try? self.save()
+                    }
+                    self.runningGameID = nil
+                }
             }
         }
     }
@@ -195,6 +204,45 @@ final class GameManager: ObservableObject {
         guard FileManager.default.fileExists(atPath: PathProvider.gamesFile.path) else { return }
         let data = try Data(contentsOf: PathProvider.gamesFile)
         games = try JSONDecoder().decode([Game].self, from: data)
+    }
+
+    // MARK: - Save Backup
+
+    /// Zips drive_c/users from the bottle into ~/SmokeLauncher/backups and returns the archive URL.
+    func backupSaves(for game: Game, bottle: Bottle) async throws -> URL {
+        let usersDir = bottle.prefixPath.appendingPathComponent("drive_c/users")
+        guard FileManager.default.fileExists(atPath: usersDir.path) else {
+            throw NSError(domain: "SmokeLauncher", code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "No save data found in this bottle."])
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HHmmss"
+        let timestamp = formatter.string(from: Date())
+        let safeName = game.displayName
+            .components(separatedBy: .alphanumerics.inverted)
+            .filter { !$0.isEmpty }
+            .joined(separator: "_")
+            .prefix(64)
+            .description
+        let backupURL = PathProvider.backupsDirectory
+            .appendingPathComponent("\(safeName)_\(timestamp).zip")
+        try FileManager.default.createDirectory(at: PathProvider.backupsDirectory, withIntermediateDirectories: true)
+
+        // Run the blocking zip process off the main actor
+        try await Task.detached(priority: .userInitiated) {
+            let proc = Process()
+            proc.executableURL = URL(fileURLWithPath: "/usr/bin/zip")
+            proc.arguments = ["-r", backupURL.path, "."]
+            proc.currentDirectoryURL = usersDir
+            try proc.run()
+            proc.waitUntilExit()
+            guard proc.terminationStatus == 0 else {
+                throw NSError(domain: "SmokeLauncher", code: 2,
+                              userInfo: [NSLocalizedDescriptionKey: "zip exited with code \(proc.terminationStatus)"])
+            }
+        }.value
+
+        return backupURL
     }
 
     // MARK: - Helpers

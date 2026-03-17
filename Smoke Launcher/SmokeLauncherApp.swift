@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import UserNotifications
 
 @main
 struct SmokeLauncherApp: App {
@@ -12,6 +13,7 @@ struct SmokeLauncherApp: App {
 
     init() {
         try? PathProvider.ensureDirectories()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
 
     var body: some Scene {
@@ -35,6 +37,13 @@ struct SmokeLauncherApp: App {
                     NotificationCenter.default.post(name: .addGame, object: nil)
                 }
                 .keyboardShortcut("n", modifiers: .command)
+            }
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates...") {
+                    NSWorkspace.shared.open(
+                        URL(string: "https://github.com/camdenslade/Smoke-Launcher/releases/latest")!
+                    )
+                }
             }
         }
     }

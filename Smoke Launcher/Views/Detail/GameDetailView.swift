@@ -6,6 +6,7 @@ struct GameDetailView: View {
     @EnvironmentObject var bottleManager: BottleManager
     @StateObject private var launchVM = LaunchViewModel()
     @State private var showSettings = false
+    @State private var showPaywall = false
 
     // Always read the live copy from gameManager so updates (e.g. steamAppID) are reflected immediately.
     private var liveGame: Game {
@@ -26,10 +27,9 @@ struct GameDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     // Hero banner - Steam header art with gradient overlay
                     ZStack(alignment: .bottomLeading) {
-                        SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0, contentMode: .fit)
-                            .frame(maxWidth: .infinity)
+                        SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0, contentMode: .fill)
                             .aspectRatio(460.0 / 215.0, contentMode: .fit)
-                            .frame(maxHeight: 260)
+                            .frame(maxWidth: .infinity)
 
                         // Gradient scrim so text is readable over any art
                         LinearGradient(
@@ -69,14 +69,14 @@ struct GameDetailView: View {
                         // Info strip
                         HStack(spacing: 8) {
                             infoChip(icon: "cylinder.split.1x2", label: bottle?.name ?? "No bottle")
-                            #if DEBUG
-                            infoChip(icon: "number", label: liveGame.steamAppID ?? "no app id")
-                            #endif
-                            infoChip(icon: "cpu", label: (bottle?.dxvkEnabled ?? false) ? "DXVK On" : "DXVK Off",
+infoChip(icon: "cpu", label: (bottle?.dxvkEnabled ?? false) ? "DXVK On" : "DXVK Off",
                                      color: (bottle?.dxvkEnabled ?? false) ? .green : .white.opacity(0.5))
                             infoChip(icon: "clock", label: liveGame.lastPlayedAt.map {
                                 $0.formatted(.relative(presentation: .named))
                             } ?? "Never played")
+                            infoChip(icon: "hourglass", label: liveGame.totalPlayTime > 0
+                                ? liveGame.formattedPlayTime
+                                : "0m")
                             Spacer()
                         }
 
@@ -84,7 +84,11 @@ struct GameDetailView: View {
                         HStack(spacing: 10) {
                             Button {
                                 guard let b = bottle else { return }
-                                launchVM.launch(game: liveGame, bottle: b, gameManager: gameManager)
+                                if TrialManager.shared.isTrialExpired {
+                                    showPaywall = true
+                                } else {
+                                    launchVM.launch(game: liveGame, bottle: b, gameManager: gameManager)
+                                }
                             } label: {
                                 HStack(spacing: 8) {
                                     Image(systemName: isRunning ? "stop.fill" : "play.fill")
@@ -150,6 +154,9 @@ struct GameDetailView: View {
         .sheet(isPresented: $showSettings) {
             GameSettingsView(game: liveGame, isPresented: $showSettings)
         }
+        .sheet(isPresented: $showPaywall) {
+            TrialPaywallView(isPresented: $showPaywall)
+        }
     }
 
     private func infoChip(icon: String, label: String, color: Color = .white.opacity(0.6)) -> some View {
@@ -170,19 +177,46 @@ struct GameSettingsView: View {
     @EnvironmentObject var bottleManager: BottleManager
     @EnvironmentObject var gameManager: GameManager
 
+    @State private var displayNameText: String = ""
+    @State private var selectedBottleID: UUID? = nil
     @State private var steamAppIDText: String = ""
+    @State private var launchArgsText: String = ""
+    @State private var backupStatus: String?
+    @State private var isBackingUp = false
+    @State private var showDeleteConfirm = false
 
-    var bottle: Bottle? {
-        bottleManager.bottles.first { $0.id == game.bottleID }
+    var selectedBottle: Bottle? {
+        bottleManager.bottles.first { $0.id == (selectedBottleID ?? game.bottleID) }
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Settings - \(game.displayName)")
+            Text("Settings")
                 .font(.title2.bold())
 
-            if let b = bottle {
-                GroupBox("Wine Bottle: \(b.name)") {
+            GroupBox("Display Name") {
+                TextField("Game name", text: $displayNameText)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.top, 4)
+            }
+
+            if bottleManager.bottles.count > 1 {
+                GroupBox("Wine Bottle") {
+                    Picker("Bottle", selection: Binding(
+                        get: { selectedBottleID ?? game.bottleID },
+                        set: { selectedBottleID = $0 }
+                    )) {
+                        ForEach(bottleManager.bottles) { b in
+                            Text(b.name).tag(b.id)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .padding(.top, 4)
+                }
+            }
+
+            if let b = selectedBottle {
+                GroupBox("Wine Settings: \(b.name)") {
                     VStack(alignment: .leading) {
                         Toggle("DXVK (DirectX → Metal)", isOn: Binding(
                             get: { b.dxvkEnabled },
@@ -201,6 +235,10 @@ struct GameSettingsView: View {
                 HStack {
                     TextField("e.g. 570 for Dota 2", text: $steamAppIDText)
                         .textFieldStyle(.roundedBorder)
+                        .onChange(of: steamAppIDText) { newValue in
+                            let digits = newValue.filter(\.isNumber)
+                            if digits != newValue { steamAppIDText = digits }
+                        }
                     if !steamAppIDText.isEmpty {
                         Link(destination: URL(string: "https://store.steampowered.com/app/\(steamAppIDText)")!) {
                             Image(systemName: "arrow.up.right.square")
@@ -208,6 +246,42 @@ struct GameSettingsView: View {
                     }
                 }
                 .padding(.top, 4)
+            }
+
+            GroupBox("Launch Arguments") {
+                TextField("e.g. -windowed -dx11", text: $launchArgsText)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.top, 4)
+            }
+
+            GroupBox("Save Backup") {
+                HStack {
+                    Text("Backs up drive_c/users from the Wine bottle.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button(isBackingUp ? "Backing up..." : "Backup Now") {
+                        guard let b = selectedBottle else { return }
+                        isBackingUp = true
+                        backupStatus = nil
+                        Task {
+                            do {
+                                let url = try await gameManager.backupSaves(for: game, bottle: b)
+                                backupStatus = "Saved to \(url.lastPathComponent)"
+                            } catch {
+                                backupStatus = error.localizedDescription
+                            }
+                            isBackingUp = false
+                        }
+                    }
+                    .disabled(selectedBottle == nil || isBackingUp)
+                }
+                .padding(.top, 4)
+                if let status = backupStatus {
+                    Text(status)
+                        .font(.caption)
+                        .foregroundStyle(status.starts(with: "Saved") ? Color.green : Color.red)
+                }
             }
 
             GroupBox("Executable Path") {
@@ -219,10 +293,25 @@ struct GameSettingsView: View {
             }
 
             HStack {
+                Button("Delete Game", role: .destructive) {
+                    showDeleteConfirm = true
+                }
+                .foregroundStyle(.red)
+                .buttonStyle(.borderless)
+
                 Spacer()
+
                 Button("Done") {
                     var updated = game
-                    updated.steamAppID = steamAppIDText.trimmingCharacters(in: .whitespaces).isEmpty ? nil : steamAppIDText.trimmingCharacters(in: .whitespaces)
+                    let trimmedName = displayNameText.trimmingCharacters(in: .whitespaces)
+                    if !trimmedName.isEmpty { updated.displayName = trimmedName }
+                    if let bid = selectedBottleID { updated.bottleID = bid }
+                    let trimmedID = steamAppIDText.trimmingCharacters(in: .whitespaces)
+                    updated.steamAppID = trimmedID.isEmpty ? nil : trimmedID
+                    updated.launchArgs = launchArgsText
+                        .trimmingCharacters(in: .whitespaces)
+                        .components(separatedBy: .whitespaces)
+                        .filter { !$0.isEmpty }
                     try? gameManager.update(updated)
                     isPresented = false
                 }
@@ -231,7 +320,23 @@ struct GameSettingsView: View {
             }
         }
         .padding(24)
-        .frame(width: 400)
-        .onAppear { steamAppIDText = game.steamAppID ?? "" }
+        .frame(width: 420)
+        .onAppear {
+            displayNameText = game.displayName
+            selectedBottleID = game.bottleID
+            steamAppIDText = game.steamAppID ?? ""
+            launchArgsText = game.launchArgs.joined(separator: " ")
+        }
+        .confirmationDialog("Delete \(game.displayName)?",
+                            isPresented: $showDeleteConfirm,
+                            titleVisibility: .visible) {
+            Button("Delete", role: .destructive) {
+                try? gameManager.remove(game)
+                isPresented = false
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This removes the game from your library. Your Wine bottle and save data are not affected.")
+        }
     }
 }
