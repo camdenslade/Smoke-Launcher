@@ -13,9 +13,9 @@
                 url="https://github.com/camdenslade/Smoke-Launcher/releases/download/v1.0.3/SmokeLauncher.dmg"
                 sparkle:version="4"
                 sparkle:shortVersionString="1.0.3"
-                length="4438859"
+                length="4462557"
                 type="application/octet-stream"
-                sparkle:edSignature="Y6F+30WVSWsRXD2DE9wPOh8FuzThL+C0udIWmdeeNw022zT503C1MIyJC3Sve87U8ZfgvBwQ3V4ZLuf1K7thBg=="
+                sparkle:edSignature="Pu8Ottp5JyGAXyI82HTXK+Fv7NQ3BUr5iQ539dpjBjx4NvoTuW2jB48sy7zW6TDgmcj56YjgXzLx1QjbLku3Dw=="
             />
         </item>
     </channel>
