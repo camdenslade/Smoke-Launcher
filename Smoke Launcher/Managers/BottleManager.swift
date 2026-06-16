@@ -109,6 +109,12 @@ final class BottleManager: ObservableObject {
         try? save()
     }
 
+    func setD3DMetal(enabled: Bool, bottleID: UUID) {
+        guard let idx = bottles.firstIndex(where: { $0.id == bottleID }) else { return }
+        bottles[idx].d3dmetalEnabled = enabled
+        try? save()
+    }
+
     // MARK: - Persistence
 
     func save() throws {

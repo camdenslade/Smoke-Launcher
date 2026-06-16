@@ -184,6 +184,7 @@ struct GameSettingsView: View {
     @EnvironmentObject var bottleManager: BottleManager
     @EnvironmentObject var gameManager: GameManager
 
+    @EnvironmentObject var runtimeManager: RuntimeManager
     @State private var displayNameText: String = ""
     @State private var selectedBottleID: UUID? = nil
     @State private var steamAppIDText: String = ""
@@ -191,6 +192,7 @@ struct GameSettingsView: View {
     @State private var backupStatus: String?
     @State private var isBackingUp = false
     @State private var showDeleteConfirm = false
+    @State private var isInstallingD3DMetal = false
 
     var selectedBottle: Bottle? {
         bottleManager.bottles.first { $0.id == (selectedBottleID ?? game.bottleID) }
@@ -224,15 +226,47 @@ struct GameSettingsView: View {
 
             if let b = selectedBottle {
                 GroupBox("Wine Settings: \(b.name)") {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Toggle("DXVK (DirectX → Metal)", isOn: Binding(
                             get: { b.dxvkEnabled },
                             set: { bottleManager.setDXVK(enabled: $0, bottleID: b.id) }
                         ))
+                        .disabled(b.d3dmetalEnabled)
                         Toggle("ESync", isOn: Binding(
                             get: { b.esyncEnabled },
                             set: { bottleManager.setEsync(enabled: $0, bottleID: b.id) }
                         ))
+                        Divider()
+                        if runtimeManager.isD3DMetalInstalled {
+                            Toggle("D3DMetal (DX11+DX12 → Metal)", isOn: Binding(
+                                get: { b.d3dmetalEnabled },
+                                set: { bottleManager.setD3DMetal(enabled: $0, bottleID: b.id) }
+                            ))
+                            Text("Apple's native DX11/DX12 translator. Better UE5 compatibility. Disables DXVK.")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("D3DMetal (DX11+DX12 → Metal)")
+                                        .foregroundStyle(.secondary)
+                                    Text("Not installed - ~15 MB download")
+                                        .font(.caption2)
+                                        .foregroundStyle(.tertiary)
+                                }
+                                Spacer()
+                                Button(isInstallingD3DMetal ? "Installing..." : "Install") {
+                                    isInstallingD3DMetal = true
+                                    Task {
+                                        await runtimeManager.installD3DMetal()
+                                        isInstallingD3DMetal = false
+                                    }
+                                }
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
+                                .disabled(isInstallingD3DMetal || runtimeManager.isDownloading)
+                            }
+                        }
                     }
                     .padding(.top, 4)
                 }

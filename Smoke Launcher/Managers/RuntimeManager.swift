@@ -8,6 +8,7 @@ struct RuntimeManifest: Codable {
     var dxvkVersion: String
     var winetricksVersion: String
     var installedAt: Date
+    var d3dmetalVersion: String?
 }
 
 // MARK: - GitHub API types
@@ -33,6 +34,7 @@ private struct GHAsset: Decodable {
 @MainActor
 final class RuntimeManager: ObservableObject {
     @Published var isInstalled: Bool = false
+    @Published var isD3DMetalInstalled: Bool = false
     @Published var isDownloading: Bool = false
     @Published var hasResumeData: Bool = false
     @Published var currentStep: String = ""
@@ -60,6 +62,8 @@ final class RuntimeManager: ObservableObject {
         let manifestOK = (try? Data(contentsOf: PathProvider.runtimeManifest))
             .flatMap { try? JSONDecoder().decode(RuntimeManifest.self, from: $0) }
         let binaryOK = PathProvider.wineBinary != nil
+
+        isD3DMetalInstalled = PathProvider.d3dmetalInstalled
 
         if let m = manifestOK, binaryOK {
             manifest = m
@@ -193,6 +197,48 @@ final class RuntimeManager: ObservableObject {
             overallProgress = 1.0
             currentStep = "Runtime ready"
             appendLog("All done. Wine \(wineVersion) + DXVK \(dxvkVersion) installed.")
+        } catch {
+            self.error = error.localizedDescription
+            appendLog("[err] \(error.localizedDescription)")
+        }
+    }
+
+    func installD3DMetal() async {
+        isDownloading = true
+        log = []
+        error = nil
+        defer { isDownloading = false }
+
+        do {
+            let url = URL(string: "https://github.com/camdenslade/Smoke-Launcher/releases/download/v1.0.3/d3dmetal.tar.xz")!
+            currentStep = "Downloading D3DMetal (~15 MB)..."
+            appendLog("Downloading D3DMetal from GPTK 3.0...")
+            let tar = try await download(from: url, progressOffset: 0.0, progressScale: 0.8)
+            overallProgress = 0.8
+
+            currentStep = "Extracting D3DMetal..."
+            appendLog("Extracting D3DMetal...")
+            let fm = FileManager.default
+            if fm.fileExists(atPath: PathProvider.d3dmetalDir.path) {
+                try fm.removeItem(at: PathProvider.d3dmetalDir)
+            }
+            try fm.createDirectory(at: PathProvider.d3dmetalDir, withIntermediateDirectories: true)
+            try await extract(tar: tar, to: PathProvider.d3dmetalDir, flags: "-xJf")
+            try fm.removeItem(at: tar)
+            overallProgress = 1.0
+
+            isD3DMetalInstalled = PathProvider.d3dmetalInstalled
+
+            // Update manifest
+            if var m = manifest {
+                m.d3dmetalVersion = "3.0-3"
+                let data = try JSONEncoder().encode(m)
+                try data.write(to: PathProvider.runtimeManifest, options: .atomic)
+                manifest = m
+            }
+
+            currentStep = "D3DMetal ready"
+            appendLog("D3DMetal installed.")
         } catch {
             self.error = error.localizedDescription
             appendLog("[err] \(error.localizedDescription)")

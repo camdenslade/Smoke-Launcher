@@ -12,6 +12,7 @@ struct Bottle: Identifiable, Codable, Hashable {
     var arch: WineArch
     var dxvkEnabled: Bool
     var esyncEnabled: Bool
+    var d3dmetalEnabled: Bool
     var createdAt: Date
 
     init(name: String, prefixPath: URL, winePath: String, arch: WineArch = .win64) {
@@ -22,6 +23,7 @@ struct Bottle: Identifiable, Codable, Hashable {
         self.arch = arch
         self.dxvkEnabled = true
         self.esyncEnabled = true
+        self.d3dmetalEnabled = false
         self.createdAt = Date()
     }
 }

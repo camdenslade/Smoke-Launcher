@@ -21,6 +21,10 @@ struct PathProvider {
     static let winetricksScript: URL = runtimeDir.appendingPathComponent("winetricks")
     static let runtimeManifest: URL = configDir.appendingPathComponent("runtime.json")
     static let wineResumeData: URL = configDir.appendingPathComponent("wine_resume.bin")
+    static let d3dmetalDir: URL = runtimeDir.appendingPathComponent("d3dmetal")
+    static var d3dmetalInstalled: Bool {
+        FileManager.default.fileExists(atPath: d3dmetalDir.appendingPathComponent("external/D3DMetal.framework").path)
+    }
 
     static let gptkWineBinary = URL(fileURLWithPath: "/Applications/Game Porting Toolkit.app/Contents/Resources/wine/bin/wine")
     static var gptkInstalled: Bool {
@@ -72,7 +76,13 @@ struct PathProvider {
                 env["WINEMSYNC"] = "0"
                 env["WINEESYNC"] = "1"
             }
-            if b.dxvkEnabled {
+            if b.d3dmetalEnabled && d3dmetalInstalled {
+                // D3DMetal: Apple's native DX11/DX12 -> Metal translator from GPTK
+                let externalDir = d3dmetalDir.appendingPathComponent("external")
+                env["WINEDLLOVERRIDES"] = "d3d11,d3d12,d3d10core,dxgi=n"
+                env["DYLD_LIBRARY_PATH"] = externalDir.path
+                env["DYLD_FALLBACK_LIBRARY_PATH"] = externalDir.path
+            } else if b.dxvkEnabled {
                 // Tell Wine to use the native (DXVK) d3d11/dxgi DLLs instead of wined3d
                 env["WINEDLLOVERRIDES"] = "d3d11,d3d10core,dxgi=n"
                 // Async shader compilation - reduces stutter on first render of each shader
