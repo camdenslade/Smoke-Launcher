@@ -4,6 +4,7 @@ struct GameDetailView: View {
     let game: Game
     @EnvironmentObject var gameManager: GameManager
     @EnvironmentObject var bottleManager: BottleManager
+    @EnvironmentObject var runtimeManager: RuntimeManager
     @StateObject private var launchVM = LaunchViewModel()
     @State private var showSettings = false
     @State private var showPaywall = false
@@ -160,6 +161,9 @@ infoChip(icon: "cpu", label: (bottle?.dxvkEnabled ?? false) ? "DXVK On" : "DXVK 
         }
         .sheet(isPresented: $showSettings) {
             GameSettingsView(game: liveGame, isPresented: $showSettings)
+                .environmentObject(runtimeManager)
+                .environmentObject(bottleManager)
+                .environmentObject(gameManager)
         }
         .sheet(isPresented: $showPaywall) {
             TrialPaywallView(isPresented: $showPaywall)
@@ -183,8 +187,8 @@ struct GameSettingsView: View {
     @Binding var isPresented: Bool
     @EnvironmentObject var bottleManager: BottleManager
     @EnvironmentObject var gameManager: GameManager
-
     @EnvironmentObject var runtimeManager: RuntimeManager
+
     @State private var displayNameText: String = ""
     @State private var selectedBottleID: UUID? = nil
     @State private var steamAppIDText: String = ""
@@ -193,6 +197,7 @@ struct GameSettingsView: View {
     @State private var isBackingUp = false
     @State private var showDeleteConfirm = false
     @State private var isInstallingD3DMetal = false
+    @State private var d3dmetalInstalled = PathProvider.d3dmetalInstalled
 
     var selectedBottle: Bottle? {
         bottleManager.bottles.first { $0.id == (selectedBottleID ?? game.bottleID) }
@@ -237,7 +242,7 @@ struct GameSettingsView: View {
                             set: { bottleManager.setEsync(enabled: $0, bottleID: b.id) }
                         ))
                         Divider()
-                        if runtimeManager.isD3DMetalInstalled {
+                        if d3dmetalInstalled {
                             Toggle("D3DMetal (DX11+DX12 → Metal)", isOn: Binding(
                                 get: { b.d3dmetalEnabled },
                                 set: { bottleManager.setD3DMetal(enabled: $0, bottleID: b.id) }
@@ -260,6 +265,7 @@ struct GameSettingsView: View {
                                     Task {
                                         await runtimeManager.installD3DMetal()
                                         isInstallingD3DMetal = false
+                                        d3dmetalInstalled = PathProvider.d3dmetalInstalled
                                     }
                                 }
                                 .buttonStyle(.bordered)
