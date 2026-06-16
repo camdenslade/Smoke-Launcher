@@ -26,13 +26,15 @@
 		A2D745FAEE30F7767CFC544C /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2235A25FFD342CB3BA57AB8B /* StatusBadge.swift */; };
 		A392F013527F234E491F26CA /* Bottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B1BF46F3369264D7B6BA9 /* Bottle.swift */; };
 		A4EFDC32F416BA66D7A96F93 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036AFDCF2D4E17832FEF982 /* LogView.swift */; };
+		AA1B2C3D4E5F6A7B8C9D0E1F /* GPTKSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */; };
+		CC1D2E3F4A5B6C7D8E9F0A1B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 6BB4B8172FE183D100124AA3 /* Sparkle */; };
 		AE031EB0367B914325EAA679 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07191A4D30CA25E091A2BBC3 /* ContentView.swift */; };
 		AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043005F930A0D4DE87642B7 /* GameDetailView.swift */; };
 		AEC97CDA7F5CBFB8A6A3D879 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C078F97DDEAB7B4AF12A8676 /* AppError.swift */; };
 		AF087ADDC03192C55C5C1991 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67EADA3E26DEC0A4311AD43 /* Game.swift */; };
+		B4C5D6E7F8A9B0C1D2E3F4A5 /* TrialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */; };
 		B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A28FC4EE091F02B47438A /* DetectedGamesView.swift */; };
 		CD6C66C97B6735E85BE8C12D /* SteamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A457939C86F30B918B89E5 /* SteamManager.swift */; };
-		B4C5D6E7F8A9B0C1D2E3F4A5 /* TrialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */; };
 		DE532A77FD415C2F79D3CFAD /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321C6BC912AB8C71A84389F4 /* LibraryView.swift */; };
 		E5E7810E010B645E46742FC5 /* GameRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E3CA048829A1EE03CB787 /* GameRowView.swift */; };
 		EA298FAA931B632375EEFFCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91889D43B804B9902E96CCE3 /* Assets.xcassets */; };
@@ -54,7 +56,6 @@
 		321C6BC912AB8C71A84389F4 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		330E3CA048829A1EE03CB787 /* GameRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRowView.swift; sourceTree = "<group>"; };
 		33A457939C86F30B918B89E5 /* SteamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamManager.swift; sourceTree = "<group>"; };
-		A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialManager.swift; sourceTree = "<group>"; };
 		36217793D8BA20E0A847ECFA /* SteamBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamBuild.swift; sourceTree = "<group>"; };
 		3BE87F93647895A9B79B9385 /* ProgressOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressOverlay.swift; sourceTree = "<group>"; };
 		5043005F930A0D4DE87642B7 /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
@@ -64,9 +65,13 @@
 		7B2143712EA34E5C9DD0F6D8 /* SmokeLauncherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeLauncherApp.swift; sourceTree = "<group>"; };
 		889A28FC4EE091F02B47438A /* DetectedGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedGamesView.swift; sourceTree = "<group>"; };
 		91889D43B804B9902E96CCE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* GlassModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassModifier.swift; sourceTree = "<group>"; };
+		A2B3C4D5E6F7A8B9C0D1E2F3 /* SteamArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamArtworkView.swift; sourceTree = "<group>"; };
+		A3B4C5D6E7F8A9B0C1D2E3F4 /* TrialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialManager.swift; sourceTree = "<group>"; };
 		A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeManager.swift; sourceTree = "<group>"; };
 		A67EADA3E26DEC0A4311AD43 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smoke Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTKSetupView.swift; sourceTree = "<group>"; };
 		C078F97DDEAB7B4AF12A8676 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		C55484DEAE104C2050688CF4 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellRunner.swift; sourceTree = "<group>"; };
@@ -74,8 +79,6 @@
 		E4B7395355F63F99E2E152D7 /* PathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathProvider.swift; sourceTree = "<group>"; };
 		F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamInstallView.swift; sourceTree = "<group>"; };
 		FC0EAB9B92E9B17E0B6C62E8 /* BottleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleManager.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* GlassModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassModifier.swift; sourceTree = "<group>"; };
-		A2B3C4D5E6F7A8B9C0D1E2F3 /* SteamArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamArtworkView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -171,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				29B9E0946BC0C335F4084515 /* BottleSetupView.swift */,
+				BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */,
 				717437EF6E781ABA0DC8BA07 /* RuntimeDownloadView.swift */,
 				29931FCD6B99FDDCD1D4F6DC /* SetupView.swift */,
 				F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */,
@@ -214,6 +218,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 962A72669CCCADCF881408D7 /* Build configuration list for PBXNativeTarget "Smoke Launcher" */;
 			buildPhases = (
+				DD2E3F4A5B6C7D8E9F0A1B2C /* Frameworks */,
 				D792DCEF74B5DF18268C454B /* Sources */,
 				ECF8700EDD734BAF322F1131 /* Resources */,
 			);
@@ -223,6 +228,7 @@
 			);
 			name = "Smoke Launcher";
 			packageProductDependencies = (
+				6BB4B8172FE183D100124AA3 /* Sparkle */,
 			);
 			productName = "Smoke Launcher";
 			productReference = A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */;
@@ -251,6 +257,9 @@
 			);
 			mainGroup = 65240E299CC3BCAB1E5E5169;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6BB4B8162FE183D100124AA3 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 67FC6FABF40D03985160E58F /* Products */;
 			projectDirPath = "";
@@ -260,6 +269,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD2E3F4A5B6C7D8E9F0A1B2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC1D2E3F4A5B6C7D8E9F0A1B /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXResourcesBuildPhase section */
 		ECF8700EDD734BAF322F1131 /* Resources */ = {
@@ -284,6 +304,7 @@
 				03A69D43C8160BD1241701A2 /* BottleManager.swift in Sources */,
 				858AC6346083134777C45E44 /* BottleSetupView.swift in Sources */,
 				AE031EB0367B914325EAA679 /* ContentView.swift in Sources */,
+				AA1B2C3D4E5F6A7B8C9D0E1F /* GPTKSetupView.swift in Sources */,
 				B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */,
 				AF087ADDC03192C55C5C1991 /* Game.swift in Sources */,
 				AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */,
@@ -320,6 +341,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Smoke Launcher/Smoke Launcher.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = P3V93LNT56;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Smoke Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -405,6 +427,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Smoke Launcher/Smoke Launcher.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = P3V93LNT56;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Smoke Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -499,6 +522,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6BB4B8162FE183D100124AA3 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6BB4B8172FE183D100124AA3 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BB4B8162FE183D100124AA3 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 587F3F3BCA58FA5AD991F189 /* Project object */;
 }

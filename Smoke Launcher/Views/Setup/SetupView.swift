@@ -45,6 +45,8 @@ struct SetupView: View {
                         switch vm.step {
                         case .runtime:
                             RuntimeDownloadView()
+                        case .gptk:
+                            GPTKSetupView(vm: vm)
                         case .bottleSetup:
                             BottleSetupView(vm: vm)
                         case .steamInstall:
@@ -80,6 +82,15 @@ struct SetupView: View {
                             .disabled(!runtimeManager.isInstalled)
                     }
 
+                    // GPTK step: Skip or Continue
+                    if vm.step == .gptk {
+                        Button("Skip") { vm.advance() }
+                            .buttonStyle(.bordered)
+                        Button(PathProvider.gptkInstalled ? "Continue" : "I've installed it") { vm.advance() }
+                            .buttonStyle(.borderedProminent)
+                            .keyboardShortcut(.return)
+                    }
+
                     if vm.step == .done {
                         Button("Done") { isPresented = false }
                             .buttonStyle(.borderedProminent)
@@ -91,9 +102,9 @@ struct SetupView: View {
         }
         .frame(width: 540, height: 560)
         .onAppear {
-            // If already installed, skip to bottle setup
+            // If runtime already installed, skip to GPTK step (or bottle setup if GPTK already installed)
             if runtimeManager.isInstalled && vm.step == .runtime {
-                vm.step = .bottleSetup
+                vm.step = PathProvider.gptkInstalled ? .bottleSetup : .gptk
             }
         }
     }
@@ -145,6 +156,7 @@ struct SetupView: View {
     private func stepLabel(_ step: SetupStep) -> String {
         switch step {
         case .runtime: return "Runtime"
+        case .gptk: return "GPTK"
         case .bottleSetup: return "Bottle"
         case .steamInstall: return "Steam"
         case .done: return "Done"

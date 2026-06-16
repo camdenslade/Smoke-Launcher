@@ -232,11 +232,8 @@ final class SteamManager: ObservableObject {
         process.executableURL = URL(fileURLWithPath: bottle.winePath)
         process.arguments = [
             steamExe.path,
-            "-disable-gpu",
-            "-no-cef-sandbox",
-            "-no-browser",
-            "-noreactlogin",
-            "-cefdisable",          // Prevents steamwebhelper.exe from being launched at all
+            "-no-cef-sandbox",      // keep - CEF sandbox crashes under Wine
+            "-noreactlogin",        // keep - old login UI is more stable under Wine
         ]
         let fullEnv = mergedEnv(env)
         process.environment = fullEnv

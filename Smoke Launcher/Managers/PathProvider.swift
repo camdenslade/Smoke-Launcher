@@ -22,8 +22,14 @@ struct PathProvider {
     static let runtimeManifest: URL = configDir.appendingPathComponent("runtime.json")
     static let wineResumeData: URL = configDir.appendingPathComponent("wine_resume.bin")
 
-    /// Searches `wineRootDir` for `*.app/Contents/Resources/wine/bin/wine`
+    static let gptkWineBinary = URL(fileURLWithPath: "/Applications/Game Porting Toolkit.app/Contents/Resources/wine/bin/wine")
+    static var gptkInstalled: Bool {
+        FileManager.default.isExecutableFile(atPath: gptkWineBinary.path)
+    }
+
+    /// Prefers GPTK if installed (D3DMetal translation), otherwise uses bundled Wine.
     static var wineBinary: URL? {
+        if gptkInstalled { return gptkWineBinary }
         let fm = FileManager.default
         guard let apps = try? fm.contentsOfDirectory(at: wineRootDir, includingPropertiesForKeys: nil)
             .filter({ $0.pathExtension == "app" })
@@ -45,19 +51,36 @@ struct PathProvider {
             "WINEPREFIX":               prefixPath.path,
             "WINEARCH":                 arch.rawValue,
             // MSync = macOS-native sync via Mach semaphores. No fd-limit issues.
-            // ESync requires 500k file descriptors - macOS hard-caps at ~10k → "cannot allocate memory"
+            // ESync requires 500k file descriptors - macOS hard-caps at ~10k - "cannot allocate memory"
             "WINEMSYNC":                "1",
             "WINEESYNC":                "0",
             // Show only actionable error channels; suppress the fixme/trace flood
             "WINEDEBUG":                "err+module,err+seh,err+wgl,err+d3d,-fixme",
             // MoltenVK: recover lost device instead of crashing on GPU reset
             "MVK_CONFIG_RESUME_LOST_DEVICE": "1",
+            // MoltenVK: faster descriptor binding (helps UE5/DX12 games)
+            "MVK_CONFIG_USE_METAL_ARGUMENT_BUFFERS": "1",
+            // MoltenVK: async queue submits for better throughput
+            "MVK_CONFIG_SYNCHRONOUS_QUEUE_SUBMITS": "0",
         ]
         if let binDir = wineBinDir {
             env["PATH"] = "\(binDir.path):\(existingPath)"
         }
         if let b = bottle {
-            env["DXVK"] = b.dxvkEnabled ? "1" : "0"
+            // ESync: override MSync when user explicitly enables it
+            if b.esyncEnabled {
+                env["WINEMSYNC"] = "0"
+                env["WINEESYNC"] = "1"
+            }
+            if b.dxvkEnabled {
+                // Tell Wine to use the native (DXVK) d3d11/dxgi DLLs instead of wined3d
+                env["WINEDLLOVERRIDES"] = "d3d11,d3d10core,dxgi=n"
+                // Async shader compilation - reduces stutter on first render of each shader
+                env["DXVK_ASYNC"] = "1"
+                // Persist compiled shader cache between sessions
+                let cacheDir = dxvkCache(in: b)
+                env["DXVK_STATE_CACHE_PATH"] = cacheDir.path
+            }
         }
         return env
     }

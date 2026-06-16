@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 import UserNotifications
+import Sparkle
 
 @main
 struct SmokeLauncherApp: App {
@@ -40,9 +41,7 @@ struct SmokeLauncherApp: App {
             }
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {
-                    NSWorkspace.shared.open(
-                        URL(string: "https://github.com/camdenslade/Smoke-Launcher/releases/latest")!
-                    )
+                    appDelegate.updaterController.checkForUpdates(nil)
                 }
             }
         }
@@ -53,12 +52,20 @@ struct SmokeLauncherApp: App {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     var runtimeManager: RuntimeManager?
+    let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        updaterController.updater.checkForUpdatesInBackground()
+    }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard let rm = runtimeManager, rm.isDownloading else {
             return .terminateNow
         }
-        // Save resume data synchronously before allowing the app to quit
         rm.prepareForTermination()
         return .terminateNow
     }

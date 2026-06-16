@@ -7,6 +7,7 @@ struct GameDetailView: View {
     @StateObject private var launchVM = LaunchViewModel()
     @State private var showSettings = false
     @State private var showPaywall = false
+    @State private var heroBannerHeight: CGFloat = 200
 
     // Always read the live copy from gameManager so updates (e.g. steamAppID) are reflected immediately.
     private var liveGame: Game {
@@ -27,9 +28,15 @@ struct GameDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     // Hero banner - Steam header art with gradient overlay
                     ZStack(alignment: .bottomLeading) {
-                        SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0, contentMode: .fill)
-                            .aspectRatio(460.0 / 215.0, contentMode: .fit)
-                            .frame(maxWidth: .infinity)
+                        GeometryReader { geo in
+                            let h = min(geo.size.width * (215.0 / 460.0), 240)
+                            SteamArtworkView(appID: liveGame.steamAppID, cornerRadius: 0, contentMode: .fill)
+                                .frame(width: geo.size.width, height: h)
+                                .onAppear { heroBannerHeight = h }
+                                .onChange(of: geo.size.width) { heroBannerHeight = min($0 * (215.0 / 460.0), 240) }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: heroBannerHeight)
 
                         // Gradient scrim so text is readable over any art
                         LinearGradient(
@@ -308,10 +315,7 @@ struct GameSettingsView: View {
                     if let bid = selectedBottleID { updated.bottleID = bid }
                     let trimmedID = steamAppIDText.trimmingCharacters(in: .whitespaces)
                     updated.steamAppID = trimmedID.isEmpty ? nil : trimmedID
-                    updated.launchArgs = launchArgsText
-                        .trimmingCharacters(in: .whitespaces)
-                        .components(separatedBy: .whitespaces)
-                        .filter { !$0.isEmpty }
+                    updated.launchArgs = Self.parseArgs(launchArgsText)
                     try? gameManager.update(updated)
                     isPresented = false
                 }
@@ -327,7 +331,7 @@ struct GameSettingsView: View {
             steamAppIDText = game.steamAppID ?? ""
             launchArgsText = game.launchArgs.joined(separator: " ")
         }
-        .confirmationDialog("Delete \(game.displayName)?",
+        .confirmationDialog("Delete \(game.displayName)",
                             isPresented: $showDeleteConfirm,
                             titleVisibility: .visible) {
             Button("Delete", role: .destructive) {
@@ -338,5 +342,27 @@ struct GameSettingsView: View {
         } message: {
             Text("This removes the game from your library. Your Wine bottle and save data are not affected.")
         }
+    }
+
+    /// Shell-style argument parser: respects single and double quotes so paths with spaces survive.
+    static func parseArgs(_ input: String) -> [String] {
+        var args: [String] = []
+        var current = ""
+        var inSingle = false
+        var inDouble = false
+        for ch in input {
+            switch ch {
+            case "\"" where !inSingle:
+                inDouble.toggle()
+            case "'" where !inDouble:
+                inSingle.toggle()
+            case " " where !inSingle && !inDouble:
+                if !current.isEmpty { args.append(current); current = "" }
+            default:
+                current.append(ch)
+            }
+        }
+        if !current.isEmpty { args.append(current) }
+        return args
     }
 }
