@@ -26,14 +26,7 @@ struct PathProvider {
         FileManager.default.fileExists(atPath: d3dmetalDir.appendingPathComponent("external/D3DMetal.framework").path)
     }
 
-    static let gptkWineBinary = URL(fileURLWithPath: "/Applications/Game Porting Toolkit.app/Contents/Resources/wine/bin/wine")
-    static var gptkInstalled: Bool {
-        FileManager.default.isExecutableFile(atPath: gptkWineBinary.path)
-    }
-
-    /// Prefers GPTK if installed (D3DMetal translation), otherwise uses bundled Wine.
     static var wineBinary: URL? {
-        if gptkInstalled { return gptkWineBinary }
         let fm = FileManager.default
         guard let apps = try? fm.contentsOfDirectory(at: wineRootDir, includingPropertiesForKeys: nil)
             .filter({ $0.pathExtension == "app" })

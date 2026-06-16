@@ -3,7 +3,6 @@ import Combine
 
 enum SetupStep: Int, CaseIterable {
     case runtime
-    case gptk
     case bottleSetup
     case steamInstall
     case done

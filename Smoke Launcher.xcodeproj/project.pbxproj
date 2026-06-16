@@ -26,7 +26,6 @@
 		A2D745FAEE30F7767CFC544C /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2235A25FFD342CB3BA57AB8B /* StatusBadge.swift */; };
 		A392F013527F234E491F26CA /* Bottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B1BF46F3369264D7B6BA9 /* Bottle.swift */; };
 		A4EFDC32F416BA66D7A96F93 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036AFDCF2D4E17832FEF982 /* LogView.swift */; };
-		AA1B2C3D4E5F6A7B8C9D0E1F /* GPTKSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */; };
 		CC1D2E3F4A5B6C7D8E9F0A1B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 6BB4B8172FE183D100124AA3 /* Sparkle */; };
 		AE031EB0367B914325EAA679 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07191A4D30CA25E091A2BBC3 /* ContentView.swift */; };
 		AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043005F930A0D4DE87642B7 /* GameDetailView.swift */; };
@@ -71,7 +70,6 @@
 		A4632179C2AADD5E74384EF0 /* RuntimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeManager.swift; sourceTree = "<group>"; };
 		A67EADA3E26DEC0A4311AD43 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		A86C3D4D419FF6D097F22C56 /* Smoke Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smoke Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTKSetupView.swift; sourceTree = "<group>"; };
 		C078F97DDEAB7B4AF12A8676 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		C55484DEAE104C2050688CF4 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		D1D4D9EF7B3F2F0C03C4691A /* ShellRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellRunner.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				29B9E0946BC0C335F4084515 /* BottleSetupView.swift */,
-				BB2C3D4E5F6A7B8C9D0E1F2A /* GPTKSetupView.swift */,
 				717437EF6E781ABA0DC8BA07 /* RuntimeDownloadView.swift */,
 				29931FCD6B99FDDCD1D4F6DC /* SetupView.swift */,
 				F529F1E2E0FFA27E57A34DAE /* SteamInstallView.swift */,
@@ -304,7 +301,6 @@
 				03A69D43C8160BD1241701A2 /* BottleManager.swift in Sources */,
 				858AC6346083134777C45E44 /* BottleSetupView.swift in Sources */,
 				AE031EB0367B914325EAA679 /* ContentView.swift in Sources */,
-				AA1B2C3D4E5F6A7B8C9D0E1F /* GPTKSetupView.swift in Sources */,
 				B884402234E9D560ED62771C /* DetectedGamesView.swift in Sources */,
 				AF087ADDC03192C55C5C1991 /* Game.swift in Sources */,
 				AE75D7A68966E6A24E490CDE /* GameDetailView.swift in Sources */,
